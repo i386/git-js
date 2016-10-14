@@ -309,9 +309,12 @@
     * List all tags
     *
     * @param {Function} [then]
+    * @param {string} [sort]
     */
-   Git.prototype.tags = function (then) {
-      return this.tag(['-l'], function (err, data) {
+   Git.prototype.tags = function (then, sort) {
+      var args = ['-l'];
+      if (sort) args.push('--sort=' + sort);
+      return this.tag(args, function (err, data) {
          then && then(err, !err && require('./TagList').parse(data));
       });
    };
